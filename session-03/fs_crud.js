@@ -25,7 +25,7 @@ const deleteDocument = (name) => {
     if (error) {
       console.log(error)
     } else {
-      console.log('Se borro el archivo exitosamente' + name)
+      console.log('Se borro el archivo exitosamente')
     }
   })
 }
