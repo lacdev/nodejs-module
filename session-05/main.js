@@ -2,9 +2,6 @@ console.log('Session 05 Async Await')
 
 // const fs = require('fs').promises
 const fs = require('fs/promises')
-const { arch } = require('os')
-const path = require('path/posix')
-
 const encoding = 'utf8'
 
 const createDocument = async (name, content) => {
@@ -36,7 +33,8 @@ const deleteDocument = async (name) => {
 
 const readDocument = async (name) => {
   try {
-    await fs.readFile(name, encoding)
+    const content = await fs.readFile(name, encoding)
+    console.log(content)
   } catch (error) {
     console.log(error)
   }
@@ -60,7 +58,17 @@ const removeDirectory = async (path) => {
 
 const readDirectory = async (path) => {
   try {
-    await fs.readdir(path)
+    let files = await fs.readdir(path)
+    console.log(files)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const removeFullDirectory = async (path) => {
+  try {
+    await fs.rm(path, { recursive: true })
+    console.log('Directorio y sus archivos correctamente eliminados')
   } catch (error) {
     console.log(error)
   }
@@ -68,15 +76,17 @@ const readDirectory = async (path) => {
 
 const main = async () => {
   //   await createDirectory('./carpeta1')
-  //   await createDocument('./carpeta1/hola.txt', 'ejercicio de prueba')
+  //   await createDocument('./carpeta1/hola3.txt', 'ejercicio de prueba')
   //   await readDocument('./carpeta1/hola.txt')
   //   await updateDocument('./carpeta1/hola.txt', 'Documento actualizado')
   //   await readDocument('./carpeta1/hola.txt')
-  //   //   await deleteDocument('./hola.txt')
+  //   await deleteDocument('./hola.txt')
   //   await removeDirectory('./carpeta1')
   //   await createDirectory('./carpetaAEliminar')
   //   await removeDirectory('./carpetaAEliminar')
-  await readDirectory('./carpeta1')
+  //   await readDirectory('./carpeta1')
+  //   await readDocument('./carpeta1/hola.txt')
+  //   await removeFullDirectory('./carpeta1')
 }
 
 main()
