@@ -1,3 +1,4 @@
+const { kStringMaxLength } = require('buffer')
 const http = require('http')
 const port = 8080 || 3000
 
@@ -5,16 +6,24 @@ const server = http.createServer((request, response) => {
   const metodo = request.method
   const url = request.url
   response.statusCode = 200
-  response.setHeader('Content-type', 'text/plain')
+  response.setHeader('Content-type', 'text/json')
 
-  if (metodo === 'GET' && url === '/koder') {
-    response.write('Aqui estan todos los koders')
-  } else if (metodo === 'POST' && url === '/koder') {
-    response.write('Aqui puedes crear koders')
-  } else {
-    response.write('No se que hacer ayuda')
+  const mensaje = {
+    message: '',
   }
 
+  if (metodo === 'GET' && url === '/koder') {
+    mensaje.message = 'Aqui estan todos los koders.'
+  } else if (metodo === 'POST' && url === '/koder') {
+    mensaje.message = 'Aqui puedes crear koders.'
+  } else {
+    response.statusCode = 400
+    mensaje.message = 'No se que hacer aiuda'
+  }
+
+  const respuesta = JSON.stringify(mensaje)
+  console.log(respuesta)
+  response.write(respuesta)
   response.end()
 })
 
