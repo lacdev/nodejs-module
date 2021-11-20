@@ -1,0 +1,14 @@
+{
+  "name": "first-app",
+  "version": "1.0.0",
+  "description": "My first app created with npm init",
+  "main": "index.js",
+  "scripts": {
+    "saludar": "./saludar.js"
+  },
+  "author": "German Martinez",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
