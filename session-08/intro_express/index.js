@@ -4,27 +4,6 @@ const encoding = 'utf8'
 const app = express() //also named server
 const port = 8080
 
-//Response format
-
-// res.format({
-//   'text/plain': function () {
-//     res.send('hey')
-//   },
-
-//   'text/html': function () {
-//     res.send('<p>hey</p>')
-//   },
-
-//   'application/json': function () {
-//     res.send({ message: 'hey' })
-//   },
-
-//   default: function () {
-//     // log the request and respond with 406
-//     res.status(406).send('Not Acceptable')
-//   },
-// })
-
 //define a handler
 //para la ruta localhost:8080/ para el metodo GET
 app.get('/', (req, res) => {
