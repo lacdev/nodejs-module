@@ -4,7 +4,7 @@
   "description": "My first app created with npm init",
   "main": "index.js",
   "scripts": {
-    "saludar": "./saludar.js"
+    "saludar": "node saludar.js"
   },
   "author": "German Martinez",
   "license": "ISC",
