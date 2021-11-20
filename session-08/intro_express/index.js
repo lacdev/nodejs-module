@@ -17,7 +17,7 @@ app.get('/koder', (req, res) => {
 app.get('/koders', async (req, res) => {
   const koders = './koders.json'
   const content = await fs.readFile(koders, encoding)
-  res.send(content)
+  res.send(JSON.parse(content))
 })
 
 app.get('/json', (req, res) => {
