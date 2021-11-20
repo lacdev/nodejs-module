@@ -1,6 +1,7 @@
 const express = require('express')
 const fs = require('fs/promises')
 const encoding = 'utf8'
+const koders = './koders.json'
 const app = express() //also named server
 const port = 8080
 
@@ -15,9 +16,10 @@ app.get('/koder', (req, res) => {
 })
 
 app.get('/koders', async (req, res) => {
-  const koders = './koders.json'
   const content = await fs.readFile(koders, encoding)
-  res.send(JSON.parse(content))
+  const kodersObject = JSON.parse(content)
+  const kodersArray = kodersObject.koders
+  res.send(kodersArray)
 })
 
 app.get('/json', (req, res) => {
