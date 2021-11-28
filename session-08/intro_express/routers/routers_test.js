@@ -158,3 +158,19 @@ async function saveKoders(koders) {
 }
 
 module.exports = router
+
+const Posts = (() => {
+  return {
+    get: async (resource) => {
+      return await fetch(resource)
+        .then((response) => response.json())
+        .then((json) => console.log(json))
+    },
+    create: async (data) => {
+      return await fetch(resource, {
+        type: 'POST',
+        body: JSON.stringify(data),
+      }).then((x) => x.json())
+    },
+  }
+})()
