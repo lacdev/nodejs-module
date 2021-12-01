@@ -11,6 +11,7 @@ const DB_NAME = 'kodemia'
 const URL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`
 
 const app = express()
+app.use(express.json())
 
 //It's a promise
 mongoose
@@ -31,33 +32,63 @@ app.get('/', (req, res) => {
 })
 
 app.get('/koders', async (req, res) => {
-  //cargar los koders
-  const koders = await Koder.find({})
-  //mandar una respuesta
-  res.json(koders)
-})
-
-app.get('/koders')
-
-app.post('/koders', async (req, res) => {
   try {
-    await Koder.create({
-      name: 'Jesus',
-      lastName: 'Solis',
-      age: 150,
-      gender: 'm',
-    })
+    const { gender, age, min_age, max_age } = req.query
+    const filters = {}
+
+    // function hasFilters(minAgeFilter, maxAgeFilter) {
+    //     if (minAgeFilter && maxAgeFilter) {
+    //         return
+    //     }
+
+    //     if (minAgeFilter) {
+    //         return
+    //     }
+
+    //     if (maxAgeFilter) {
+
+    //     }
+    // }
+
+    if (gender) filters.gender = gender
+    if (age) filters.age = age
+    if (min_age) filters.age = { $gte: min_age }
+    if (max_age) filters.age = { $lte: max_age }
+
+    console.log('Fitros', filters)
+
+    const koders = await Koder.find(filters)
+    res.json(koders)
   } catch (error) {
+    console.log(error)
     res.statusCode = 500
     res.end()
   }
-  //crear koder con Schema definido
-  //   .catch((error) => console.log(error))
+})
 
-  //   const koders = await Koder.find({})
-  //   console.log(koders)
-  //   res.json(koders)
+app.post('/koders', async (req, res) => {
+  const { name, lastName, gender, age } = req.body
 
-  res.statusCode = 201
-  res.json({ success: true })
+  try {
+    const newKoder = await Koder.create({
+      name,
+      lastName,
+      age,
+      gender,
+    })
+
+    res.statusCode = 201
+    res.json({
+      success: true,
+      data: {
+        koder: newKoder,
+      },
+    })
+  } catch (error) {
+    res.statusCode = 400
+    res.json({
+      success: false,
+      error,
+    })
+  }
 })
